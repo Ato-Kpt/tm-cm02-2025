@@ -49,20 +49,27 @@ boxplot(chp$ldl,ylab="LDL Cholesterol (mmol/L)", main="Boxplot of LDL Cholestero
   
 # (i) Age
 summary(chp$age)
+quantile(chp$age)
 quantile(chp$age,na.rm = TRUE)
 # Checking the distribution of the variable (using histogram)
-hist(chp$age,breaks = 100,xlab="Age (in years)", main="Histogram of Age")
+hist(chp$ldl,breaks = 100,xlab="Age (in years)", main="Histogram of Age",col = 'Orange')
 # Checking for outliers (using box plot)
-boxplot(chp$age,ylab="Age (in years)", main="Boxplot of Age",col = 'grey')
+boxplot(chp$ldl,ylab="Age (in years)", main="Boxplot of Age",col = 'blue')
+
 
 
 # (ii) BMI
 summary(chp$bmi)
+quantile(chp$bmi)
 quantile(chp$bmi,na.rm = TRUE)
 # Checking the distribution of the variable (using histogram)
-hist(chp$bmi,breaks = 100,xlab="BMI", main="Histogram of BMI")
+hist(chp$bmi,breaks = 100,xlab="bmi (kg/m2)", main="Histogram of bmi ",col = 'pink')
 # Checking for outliers (using box plot)
-boxplot(chp$bmi,ylab="BMI", main="Boxplot of BMI",col = 'grey')
+boxplot(chp$bmi,ylab="bmi (kg/m2)", main="Boxplot of bmi",col = 'blue')
+
+
+
+
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
@@ -84,12 +91,20 @@ prop.table(table(chp$gender, useNA = 'ifany'))
   
 
 # (i) Smoking status
+# build a (one-way) contingency table of the counts at each combination of factor levels 
 table(chp$smoke, useNA = 'ifany')
+# Use the “prop.table” function to get the proportions
 prop.table(table(chp$smoke, useNA = 'ifany'))
 
+
+
 # (ii) Ethnicity
+# build a (one-way) contingency table of the counts at each combination of factor levels 
 table(chp$ethnicity, useNA = 'ifany')
+# Use the “prop.table” function to get the proportions
 prop.table(table(chp$ethnicity, useNA = 'ifany'))
+
+
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
@@ -118,11 +133,14 @@ chp$age_drop[chp$age_drop<40 | chp$age_drop>100]
 chp$age_drop[chp$age_drop<40 | chp$age_drop>100] = NA
 summary(chp$age_drop)
 
+
 # (ii) Data cleaning for continuous variable: BMI
 chp$bmi_drop = chp$bmi
 chp$bmi_drop[chp$bmi_drop>50]
 chp$bmi_drop[chp$bmi_drop>50] = NA
 summary(chp$bmi_drop)
+
+
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
@@ -149,11 +167,16 @@ chp$smoke[chp$smoke %in% "zsmoker"] = NA
 table(chp$smoke, useNA = 'ifany')
 
 
+
 # (ii) Ethnicity
 table(chp$ethnicity, useNA = 'ifany')
 chp$ethnicity[chp$ethnicity %in% "chinese"]
 chp$ethnicity[chp$ethnicity %in% "chinese"] = "Chinese"
 table(chp$ethnicity, useNA = 'ifany')
+
+
+
+
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
@@ -204,8 +227,11 @@ summary(chp$bmi_drop)
 summary(chp$bmi_drop[chp$overweight %in% 0])
 summary(chp$bmi_drop[chp$overweight %in% 1])
 
+summary(chp$bmi_drop[chp$gender %in% 'Male'])
+summary(chp$bmi_drop[chp$gender %in% 'Female'])
 
-
+summary(chp$bmi_drop[chp$cvd %in% 0])
+summary(chp$bmi_drop[chp$cvd %in% 1])
 
 # Store this file as “chp_processed_data”
 chp_processed_data = chp
